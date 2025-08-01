@@ -53,5 +53,6 @@ Comparison Table:
 Version	R² Score	MSE Loss	Notes
 
 Unquantized	~0.60	~0.53	Raw model from training
+
 Quantized	~0.58	Slight ↑	Approx. due to rounding
 
