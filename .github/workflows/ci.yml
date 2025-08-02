@@ -33,9 +33,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-      - name: Train and Quantize
+      - name: Train
         run: |
           python src/train.py
+      - name: Quantize
+        run: |
           python src/quantize.py
 
   build-and-test-container:
