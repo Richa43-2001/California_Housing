@@ -49,8 +49,10 @@ Workflow Summary:
 • Docker Image Build & Test Run
 
 PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\train.py       
-R2 Score: 0.606232685199805
-MSE Loss: 0.5243209861846072
+✅ R2 Score: 0.6062
+✅ MSE Loss: 0.5243
+✅ model.joblib saved
+✅ unquant_params.joblib saved
 PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python tests\test_train.py
 PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\quantize.py    
 ✅ Loaded model.joblib
@@ -65,7 +67,7 @@ Trained Model        0.6062       0.5243
 Unquantized Params   0.6062       0.5243
 Quantized Params     0.6062       0.5243
 ------------------------------------------------------------
-PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\predict.py 
+PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\predict.py
 
 🔍 Sample input shape: (5, 8)
 
@@ -77,3 +79,4 @@ PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\pre
 
 ✅ Quantized Params Predictions:
 [4.1316474  3.976604   3.67656852 3.2415961  2.41358506]
+PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing>
