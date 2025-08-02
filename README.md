@@ -57,13 +57,13 @@ Loading trained model...
 Saved unquantized parameters to 'unquant_params.joblib'
 Saved quantized parameters to 'quant_params.joblib'
 
-📊 Model Comparison
-----------------------------------------
-Model           R2 Score   MSE
-----------------------------------------
-Unquantized     0.6062     0.5243
-Quantized       -30595.9322 40741.3542
-----------------------------------------
-PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\predict.py
+📊 Model Comparison (Original vs Quantized float32)
+--------------------------------------------------
+Model           R2 Score     MSE
+--------------------------------------------------
+Original        0.6062       0.5243
+Quantized       0.6062       0.5243
+--------------------------------------------------
+PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\predict.py 
 Original Model Predictions: [4.13164983 3.97660644 3.67657094 3.2415985  2.41358744]
-Quantized Model Predictions: [-194.81067352 -196.71077726 -192.11569879 -198.90952408 -198.53438303]
+Quantized Model Predictions: [0.04131647 0.03976604 0.03676568 0.03241596 0.02413585]

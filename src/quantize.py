@@ -3,9 +3,8 @@ import numpy as np
 from sklearn.datasets import fetch_california_housing
 from sklearn.metrics import r2_score, mean_squared_error
 
-# Load dataset
-data = fetch_california_housing()
-X, y = data.data, data.target
+# Load data
+X, y = fetch_california_housing(return_X_y=True)
 
 # Load trained model
 print("Loading trained model...")
@@ -19,9 +18,9 @@ params = {
 joblib.dump(params, "unquant_params.joblib")
 print("Saved unquantized parameters to 'unquant_params.joblib'")
 
-# Manual quantization
-quantized_coef = (model.coef_ * 100).astype(np.uint8)
-quantized_intercept = int(model.intercept_ * 100)
+# Float32 quantization (simulate lower-precision storage)
+quantized_coef = model.coef_.astype(np.float32)
+quantized_intercept = np.float32(model.intercept_)
 
 quant_params = {
     "coef": quantized_coef,
@@ -30,28 +29,24 @@ quant_params = {
 joblib.dump(quant_params, "quant_params.joblib")
 print("Saved quantized parameters to 'quant_params.joblib'")
 
-# Dequantization
-dequant_coef = quantized_coef.astype(np.float64) / 100
-dequant_intercept = quantized_intercept / 100
+# Inference with quantized weights
+y_pred_quant = X @ quantized_coef + quantized_intercept
 
-# Prediction using dequantized weights
-y_pred_quant = X @ dequant_coef + dequant_intercept
-
-# Prediction using original model
-y_pred_unquant = model.predict(X)
+# Inference with original model
+y_pred_orig = model.predict(X)
 
 # Evaluation
-r2_unquant = r2_score(y, y_pred_unquant)
-r2_quant = r2_score(y, y_pred_quant)
+r2_orig = r2_score(y, y_pred_orig)
+mse_orig = mean_squared_error(y, y_pred_orig)
 
-mse_unquant = mean_squared_error(y, y_pred_unquant)
+r2_quant = r2_score(y, y_pred_quant)
 mse_quant = mean_squared_error(y, y_pred_quant)
 
-# Comparison Table
-print("\n📊 Model Comparison")
-print("-" * 40)
-print(f"{'Model':<15} {'R2 Score':<10} {'MSE':<10}")
-print("-" * 40)
-print(f"{'Unquantized':<15} {r2_unquant:<10.4f} {mse_unquant:<10.4f}")
-print(f"{'Quantized':<15} {r2_quant:<10.4f} {mse_quant:<10.4f}")
-print("-" * 40)
+# Comparison table
+print("\n📊 Model Comparison (Original vs Quantized float32)")
+print("-" * 50)
+print(f"{'Model':<15} {'R2 Score':<12} {'MSE':<12}")
+print("-" * 50)
+print(f"{'Original':<15} {r2_orig:<12.4f} {mse_orig:<12.4f}")
+print(f"{'Quantized':<15} {r2_quant:<12.4f} {mse_quant:<12.4f}")
+print("-" * 50)
