@@ -1,25 +1,41 @@
 import joblib
 import numpy as np
 from sklearn.datasets import fetch_california_housing
+import os
 
-# Load data
-data = fetch_california_housing()
-X = data.data
+# Load dataset
+X, _ = fetch_california_housing(return_X_y=True)
+X_sample = X[:5]
 
-# Load original model
-model = joblib.load("model.joblib")
-y_pred_original = model.predict(X[:5])
-print("Original Model Predictions:", y_pred_original)
+print("\n🔍 Sample input shape:", X_sample.shape)
 
-# Load quantized params
-quant_params = joblib.load("quant_params.joblib")
-quantized_coef = quant_params["coef"]
-quantized_intercept = quant_params["intercept"]
+# === Trained Model Predictions ===
+if os.path.exists("model.joblib"):
+    model = joblib.load("model.joblib")
+    preds_trained = model.predict(X_sample)
+    print("\n✅ Trained Model Predictions:")
+    print(preds_trained)
+else:
+    print("\n❌ Trained model (model.joblib) not found.")
 
-# Dequantize
-dequant_coef = quantized_coef.astype(np.float64) / 100
-dequant_intercept = quantized_intercept / 100
+# === Unquantized Params Predictions ===
+if os.path.exists("unquant_params.joblib"):
+    unquant = joblib.load("unquant_params.joblib")
+    coef_unq = unquant["coef"]
+    intercept_unq = unquant["intercept"]
+    preds_unquant = X_sample @ coef_unq + intercept_unq
+    print("\n✅ Unquantized Params Predictions:")
+    print(preds_unquant)
+else:
+    print("\n❌ unquant_params.joblib not found.")
 
-# Predict using dequantized weights
-y_pred_quantized = X[:5] @ dequant_coef + dequant_intercept
-print("Quantized Model Predictions:", y_pred_quantized)
+# === Quantized Params Predictions ===
+if os.path.exists("quant_params.joblib"):
+    quant = joblib.load("quant_params.joblib")
+    coef_q = quant["coef"]
+    intercept_q = quant["intercept"]
+    preds_quant = X_sample @ coef_q + intercept_q
+    print("\n✅ Quantized Params Predictions:")
+    print(preds_quant)
+else:
+    print("\n❌ quant_params.joblib not found.")

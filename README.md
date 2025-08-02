@@ -53,17 +53,27 @@ R2 Score: 0.606232685199805
 MSE Loss: 0.5243209861846072
 PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python tests\test_train.py
 PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\quantize.py    
-Loading trained model...
-Saved unquantized parameters to 'unquant_params.joblib'
-Saved quantized parameters to 'quant_params.joblib'
+✅ Loaded model.joblib
+✅ Saved unquantized params to unquant_params.joblib
+✅ Saved quantized params to quant_params.joblib
 
-📊 Model Comparison (Original vs Quantized float32)
---------------------------------------------------
-Model           R2 Score     MSE
---------------------------------------------------
-Original        0.6062       0.5243
-Quantized       0.6062       0.5243
---------------------------------------------------
+📊 Final Model Comparison
+------------------------------------------------------------
+Model Version        R2 Score     MSE
+------------------------------------------------------------
+Trained Model        0.6062       0.5243
+Unquantized Params   0.6062       0.5243
+Quantized Params     0.6062       0.5243
+------------------------------------------------------------
 PS C:\Richa\Assignment\MLOPS\Major_Assignment\California_Housing> python src\predict.py 
-Original Model Predictions: [4.13164983 3.97660644 3.67657094 3.2415985  2.41358744]
-Quantized Model Predictions: [0.04131647 0.03976604 0.03676568 0.03241596 0.02413585]
+
+🔍 Sample input shape: (5, 8)
+
+✅ Trained Model Predictions:
+[4.13164983 3.97660644 3.67657094 3.2415985  2.41358744]
+
+✅ Unquantized Params Predictions:
+[4.13164983 3.97660644 3.67657094 3.2415985  2.41358744]
+
+✅ Quantized Params Predictions:
+[4.1316474  3.976604   3.67656852 3.2415961  2.41358506]
